@@ -12,13 +12,14 @@ class LightScroll {
         this.els = this.getEls();
         this.setAllElsOff();
 
+
+        this.bind();
+        if(this.config.debug) this.buildDebug();
+
         var self = this;
         setTimeout(function(){
             self.initElsState();
         }, 100);
-
-        this.bind();
-        if(this.config.debug) this.buildDebug();
     }
     getConfig(config){
         this.dconf = {
@@ -111,14 +112,18 @@ class LightScroll {
         this.style.innerHTML +=
             '.' + this.config.selector +'-opacity.' + this.config.offClassName + '{ opacity: 0 } \n' +
             '.' + this.config.selector +'-opacity { opacity: 1 } \n';
+        // SCALE
+        this.style.innerHTML +=
+            '.' + this.config.selector +'-scale.' + this.config.offClassName + '{ transform: scale(0) } \n' +
+            '.' + this.config.selector +'-scale { transform: scale(1) } \n';
         // DELAY
         this.style.innerHTML +=
-            '.' + this.config.selector +'-delay-0 { transition-delay: '+ 0 * this.config.delay +'ms }\n'+
-            '.' + this.config.selector +'-delay-1 { transition-delay: '+ 1 * this.config.delay +'ms }\n'+
-            '.' + this.config.selector +'-delay-2 { transition-delay: '+ 2 * this.config.delay +'ms }\n'+
-            '.' + this.config.selector +'-delay-3 { transition-delay: '+ 3 * this.config.delay +'ms }\n'+
-            '.' + this.config.selector +'-delay-4 { transition-delay: '+ 4 * this.config.delay +'ms }\n'+
-            '.' + this.config.selector +'-delay-5 { transition-delay: '+ 5 * this.config.delay +'ms }\n'
+            '.' + this.config.selector + '.' + this.config.selector +'-delay-0 { transition-delay: '+ 0 * this.config.delay +'ms }\n'+
+            '.' + this.config.selector + '.' + this.config.selector +'-delay-1 { transition-delay: '+ 1 * this.config.delay +'ms }\n'+
+            '.' + this.config.selector + '.' + this.config.selector +'-delay-2 { transition-delay: '+ 2 * this.config.delay +'ms }\n'+
+            '.' + this.config.selector + '.' + this.config.selector +'-delay-3 { transition-delay: '+ 3 * this.config.delay +'ms }\n'+
+            '.' + this.config.selector + '.' + this.config.selector +'-delay-4 { transition-delay: '+ 4 * this.config.delay +'ms }\n'+
+            '.' + this.config.selector + '.' + this.config.selector +'-delay-5 { transition-delay: '+ 5 * this.config.delay +'ms }\n'
         ;
 
         document.body.appendChild(this.style);
@@ -160,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
     * */
     new LightScroll({
         delay: 200,
-        transition: 1000
+        transition: 1000,
+        // debug: true
     });
 });
